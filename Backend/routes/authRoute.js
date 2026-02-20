@@ -4,10 +4,21 @@ const userModel = require("../Models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-router.post("/register", (req, res) => {
+router.post("/register", async (req, res) => {
+  const { username, email, age, password } = req.body;
+
+  const createUser = await userModel.create({
+    username,
+    email,
+    age,
+    password,
+  });
+
+  console.log(createUser);
+
   res.json({
-    sucess: true,
-    message: "Register route working",
+    success: true,
+    message: "User Registered successfully.",
   });
 });
 

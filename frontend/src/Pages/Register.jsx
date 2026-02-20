@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { registerUser } from "../api";
 
 const Register = () => {
+  const navigate = useNavigate("");
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     age: "",
     password: "",
@@ -18,6 +20,24 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await registerUser(formData);
+      console.log(response);
+
+      if (response.success) {
+        setFormData({
+          username: "",
+          email: "",
+          age: "",
+          password: "",
+        });
+      }
+      navigate("/login");
+      alert("Account successfully created.");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -33,9 +53,9 @@ const Register = () => {
             <label className="text-sm text-zinc-300">Full Name</label>
             <input
               type="text"
-              name="name"
+              name="username"
               placeholder="John Doe"
-              value={formData.name}
+              value={formData.username}
               onChange={handleChange}
               className="w-full mt-1 p-3 rounded-lg bg-zinc-700 text-white outline-none focus:ring-2 focus:ring-indigo-500"
             />
