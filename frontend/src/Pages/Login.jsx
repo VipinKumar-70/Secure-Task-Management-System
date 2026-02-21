@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "../api";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -15,8 +15,19 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await loginUser(formData);
+
+      if (response.success) {
+        alert("Login successful!");
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -58,7 +69,7 @@ const Login = () => {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full p-3 rounded-lg font-medium transition bg-indigo-600 hover:bg-indigo-700text-white"
+            className="w-full p-3 rounded-lg font-medium transition bg-indigo-600 hover:bg-indigo-700 text-white"
           >
             Login
           </button>

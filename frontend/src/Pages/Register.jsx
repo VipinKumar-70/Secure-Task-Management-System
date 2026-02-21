@@ -3,11 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../api";
 
 const Register = () => {
-  const navigate = useNavigate("");
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [formData, setFormData] = useState({
     username: "",
     email: "",
-    age: "",
+    dob: "",
     password: "",
   });
 
@@ -21,22 +23,40 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setError("");
+    setSuccess("");
+
     try {
+      const passwordRegex =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+      if (!passwordRegex.test(formData.password)) {
+        setError(
+          "Password must be at least 6 characters and include uppercase, lowercase, number, and special character.",
+        );
+        return;
+      }
+
       const response = await registerUser(formData);
       console.log(response);
 
       if (response.success) {
+        setSuccess(response.message);
         setFormData({
           username: "",
           email: "",
-          age: "",
+          dob: "",
           password: "",
         });
+
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500);
+      } else {
+        setError(response.message);
       }
-      navigate("/login");
-      alert("Account successfully created.");
     } catch (error) {
-      console.log(error);
+      setError(err.message || "Something went wrong");
     }
   };
 
@@ -46,6 +66,18 @@ const Register = () => {
         <h2 className="text-3xl font-semibold text-white mb-6 text-center">
           Create Account
         </h2>
+
+        {error && (
+          <div className="bg-red-500 text-white p-3 rounded-lg text-sm mb-4">
+            {error}
+          </div>
+        )}
+
+        {success && (
+          <div className="bg-green-500 text-white p-3 rounded-lg text-sm mb-4">
+            {success}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Name */}
@@ -58,6 +90,7 @@ const Register = () => {
               value={formData.username}
               onChange={handleChange}
               className="w-full mt-1 p-3 rounded-lg bg-zinc-700 text-white outline-none focus:ring-2 focus:ring-indigo-500"
+              required
             />
           </div>
 
@@ -71,19 +104,20 @@ const Register = () => {
               value={formData.email}
               onChange={handleChange}
               className="w-full mt-1 p-3 rounded-lg bg-zinc-700 text-white outline-none focus:ring-2 focus:ring-indigo-500"
+              required
             />
           </div>
 
-          {/* age */}
+          {/* DOB */}
           <div>
-            <label className="text-sm text-zinc-300">Age</label>
+            <label className="text-sm text-zinc-300">DOB</label>
             <input
-              type="text"
-              name="age"
-              placeholder="12"
-              value={formData.age}
+              type="date"
+              name="dob"
+              value={formData.dob}
               onChange={handleChange}
               className="w-full mt-1 p-3 rounded-lg bg-zinc-700 text-white outline-none focus:ring-2 focus:ring-indigo-500"
+              required
             />
           </div>
 
@@ -98,6 +132,7 @@ const Register = () => {
                 value={formData.password}
                 onChange={handleChange}
                 className="w-full mt-1 p-3 rounded-lg bg-zinc-700 text-white outline-none focus:ring-2 focus:ring-indigo-500"
+                required
               />
             </div>
           </div>

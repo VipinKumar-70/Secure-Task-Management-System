@@ -3,11 +3,19 @@ require("dotenv").config();
 const express = require("express");
 const connectDB = require("./config/db");
 const cors = require("cors");
-const authRoute = require("./routes/authRoute");
+const cookieParser = require("cookie-parser");
+const authRoute = require("./routes/authroute");
+const dashboard = require("./routes/dashboard");
 
 const app = express();
 
-app.use(cors());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -20,6 +28,7 @@ const startServer = async () => {
     });
 
     app.use("/api", authRoute);
+    app.use("/api", dashboard);
 
     app.get("/api/test", (req, res) => {
       res.send("Backend Connected");

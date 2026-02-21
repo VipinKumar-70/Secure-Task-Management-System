@@ -6,6 +6,7 @@ export const registerUser = async (data) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify(data),
   });
 
@@ -18,7 +19,18 @@ export const loginUser = async (data) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify(data),
   });
+
+  return res.json();
+};
+
+export const logoutUser = async () => {
+  const res = await fetch(`${BASE_URL}/api/logout`, {
+    method: "POST",
+    credentials: "include",
+  });
+
   return res.json();
 };
