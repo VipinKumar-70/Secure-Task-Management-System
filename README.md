@@ -122,6 +122,65 @@ Task-Manager-MERN/
 └── LICENSE
 ```
 
+---
+
+## 📸 Application Screenshots
+
+### 🔧 Backend Running
+
+![Backend Running](./screenshots/backend-running.png)
+
+### 💻 Frontend Running
+
+![Frontend Running](./screenshots/frontend-running.png)
+
+### 🔐 Login Page
+
+![Login](./screenshots/login.png)
+
+### 📝 Register Page
+
+![Register](./screenshots/register.png)
+
+### 📊 Dashboard
+
+![Dashboard](./screenshots/dashboard.png)
+
+---
+
+## 🚀 Production Scaling Strategy
+
+To scale this application for production:
+
+### 🔐 Security Enhancements
+
+- Use HTTPS with `secure: true` cookies
+- Implement refresh tokens with rotation
+- Add rate limiting (express-rate-limit)
+- Add request validation middleware (Joi/Zod)
+- Implement CSRF protection
+- Add Helmet for secure HTTP headers
+
+### ⚡ Performance & Architecture
+
+- Deploy frontend on Vercel
+- Deploy backend on Render / Railway / AWS
+- Use MongoDB Atlas for cloud database
+- Add Redis for caching frequent requests
+- Use environment-based configuration
+- Enable database indexing for faster queries
+
+### 🧩 Scalability Improvements
+
+- Separate services (Auth Service / Task Service)
+- Add logging (Winston / Morgan)
+- Add monitoring (Sentry)
+- Implement pagination & filtering
+- Use Docker for containerization
+- CI/CD pipeline with GitHub Actions
+
+This architecture ensures horizontal scalability and production readiness.
+
 ## 🔧 Installation
 
 ### 1️⃣ Clone Repository
