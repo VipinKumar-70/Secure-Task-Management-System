@@ -52,16 +52,31 @@ Modern, production-ready authentication practices + responsive UI.
 
 ## 📦 Dependencies
 
+### Backend
+
 ```bash
 
-"dependencies": {
+ "dependencies": {
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
     "dotenv": "^17.3.1",
-    "ejs": "^4.0.1",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.2.0"
+    "mongoose": "^9.2.1"
+  }
+```
+
+### Frontend
+
+```bash
+
+ "dependencies": {
+    "@tailwindcss/vite": "^4.2.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.13.0",
+    "tailwindcss": "^4.2.0"
   }
 ```
 
