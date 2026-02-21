@@ -6,6 +6,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const authRoute = require("./routes/authroute");
 const dashboard = require("./routes/dashboard");
+const task = require("./routes/task");
 
 const app = express();
 
@@ -29,6 +30,7 @@ const startServer = async () => {
 
     app.use("/api", authRoute);
     app.use("/api", dashboard);
+    app.use("/api", task);
 
     app.get("/api/test", (req, res) => {
       res.send("Backend Connected");
