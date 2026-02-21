@@ -8,11 +8,9 @@ const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
   const [taskText, setTaskText] = useState("");
 
-  // ================= FETCH USER + TASKS =================
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch user
         const userRes = await fetch("http://localhost:3000/api/dashboard", {
           credentials: "include",
         });
@@ -25,7 +23,6 @@ const Dashboard = () => {
         const userData = await userRes.json();
         setUser(userData.user);
 
-        // Fetch tasks
         const taskRes = await fetch("http://localhost:3000/api/task", {
           credentials: "include",
         });
@@ -40,7 +37,6 @@ const Dashboard = () => {
     fetchData();
   }, [navigate]);
 
-  // ================= ADD TASK =================
   const addTask = async () => {
     if (!taskText.trim()) return;
 
@@ -56,7 +52,6 @@ const Dashboard = () => {
     setTaskText("");
   };
 
-  // ================= DELETE TASK =================
   const deleteTask = async (id) => {
     await fetch(`http://localhost:3000/api/task/${id}`, {
       method: "DELETE",
@@ -66,7 +61,6 @@ const Dashboard = () => {
     setTasks(tasks.filter((task) => task._id !== id));
   };
 
-  // ================= EDIT TASK =================
   const editTask = async (id) => {
     const newText = prompt("Edit your task:");
     if (!newText) return;
@@ -83,7 +77,6 @@ const Dashboard = () => {
     setTasks(tasks.map((task) => (task._id === id ? updatedTask : task)));
   };
 
-  // ================= LOGOUT =================
   const handleLogout = async () => {
     await logoutUser();
     navigate("/login");
