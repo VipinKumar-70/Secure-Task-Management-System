@@ -94,85 +94,111 @@ const Dashboard = () => {
   }
 
   return (
-    <section className="min-h-screen bg-zinc-900 text-white p-8">
+    <section className="min-h-screen bg-linear-to-br from-zinc-950 via-zinc-900 to-zinc-950 text-white px-6 py-10">
       {/* Header */}
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-semibold">Dashboard</h1>
+      <div className="max-w-5xl mx-auto flex justify-between items-center mb-12">
+        <div>
+          <h1 className="text-4xl font-bold tracking-tight bg-linear-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+            Dashboard
+          </h1>
+          <p className="text-zinc-400 text-sm mt-1">
+            Welcome back, {user.username}
+          </p>
+        </div>
+
         <button
           onClick={handleLogout}
-          className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition"
+          className="bg-red-600/90 hover:bg-red-700 transition-all duration-200 px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-red-900/30 hover:scale-105 active:scale-95"
         >
           Logout
         </button>
       </div>
 
-      {/* User Profile */}
-      <div className="bg-zinc-800 p-6 rounded-xl shadow-lg max-w-md">
-        <h2 className="text-xl font-medium mb-4">User Profile</h2>
+      <div className="max-w-5xl mx-auto grid md:grid-cols-1 gap-8">
+        {/* User Profile Card */}
+        <div className="backdrop-blur-lg bg-zinc-800/60 border border-zinc-700/50 p-8 rounded-3xl shadow-2xl hover:shadow-blue-900/10 transition">
+          <h2 className="text-2xl font-semibold mb-6 border-b border-zinc-700 pb-3">
+            User Profile
+          </h2>
 
-        <p>
-          <span className="text-zinc-400">Name:</span> {user.username}
-        </p>
-        <p>
-          <span className="text-zinc-400">Email:</span> {user.email}
-        </p>
-        <p>
-          <span className="text-zinc-400">DOB:</span>{" "}
-          {new Date(user.dob).toLocaleDateString()}
-        </p>
-      </div>
+          <div className="space-y-4 text-sm">
+            <div className="flex justify-between">
+              <span className="text-zinc-400">Username</span>
+              <span className="font-medium">{user.username}</span>
+            </div>
 
-      {/* Task Section */}
-      <div className="bg-zinc-800 p-6 rounded-2xl shadow-xl max-w-md my-10 border border-zinc-700">
-        <h2 className="text-xl font-semibold mb-4">Your Tasks</h2>
+            <div className="flex justify-between">
+              <span className="text-zinc-400">Email</span>
+              <span className="font-medium">{user.email}</span>
+            </div>
 
-        <div className="flex gap-3 mb-4">
-          <input
-            type="text"
-            value={taskText}
-            onChange={(e) => setTaskText(e.target.value)}
-            placeholder="Enter a new task..."
-            className="flex-1 px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700 placeholder:text-zinc-500 outline-none focus:ring-2 focus:ring-blue-500"
-          />
-
-          <button
-            onClick={addTask}
-            className="bg-blue-600 hover:bg-blue-700 transition px-5 py-2 rounded-lg font-medium"
-          >
-            Add
-          </button>
+            <div className="flex justify-between">
+              <span className="text-zinc-400">Date of Birth</span>
+              <span className="font-medium">
+                {new Date(user.dob).toLocaleDateString()}
+              </span>
+            </div>
+          </div>
         </div>
 
-        <ul className="space-y-3">
-          {tasks.length === 0 ? (
-            <p className="text-zinc-400 text-sm">No tasks yet</p>
-          ) : (
-            tasks.map((task) => (
-              <li
-                key={task._id}
-                className="flex justify-between items-center bg-zinc-900 px-4 py-3 rounded-lg border border-zinc-700"
-              >
-                <span className="text-sm">{task.text}</span>
+        {/* Tasks Card */}
+        <div className="backdrop-blur-lg bg-zinc-800/60 border border-zinc-700/50 p-8 rounded-3xl shadow-2xl transition">
+          <h2 className="text-2xl font-semibold mb-6 border-b border-zinc-700 pb-3">
+            Your Tasks
+          </h2>
 
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => editTask(task._id)}
-                    className="bg-yellow-500 hover:bg-yellow-600 text-sm px-3 py-1 rounded-md"
-                  >
-                    Edit
-                  </button>
+          {/* Add Task */}
+          <div className="flex gap-3 mb-6">
+            <input
+              type="text"
+              value={taskText}
+              onChange={(e) => setTaskText(e.target.value)}
+              placeholder="What needs to be done?"
+              className="flex-1 px-4 py-3 rounded-xl bg-zinc-900/80 border border-zinc-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all placeholder:text-zinc-500"
+            />
 
-                  <button
-                    onClick={() => deleteTask(task._id)}
-                    className="bg-red-600 hover:bg-red-700 text-sm px-3 py-1 rounded-md"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </li>
-            ))
-          )}
-        </ul>
+            <button
+              onClick={addTask}
+              className="bg-linear-to-r from-blue-600 to-purple-600 hover:opacity-90 transition-all duration-200 px-6 py-3 rounded-xl font-medium shadow-lg shadow-blue-900/30 hover:scale-105 active:scale-95"
+            >
+              Add
+            </button>
+          </div>
+
+          {/* Task List */}
+          <ul className="space-y-4 max-h-80 overflow-y-auto pr-2">
+            {tasks.length === 0 ? (
+              <p className="text-zinc-500 text-sm text-center py-6">
+                No tasks yet. Start by adding one 🚀
+              </p>
+            ) : (
+              tasks.map((task) => (
+                <li
+                  key={task._id}
+                  className="group flex justify-between items-center bg-zinc-900/80 border border-zinc-700 rounded-xl px-4 py-3 hover:border-blue-500/40 hover:shadow-lg transition-all duration-200"
+                >
+                  <span className="text-sm text-zinc-200">{task.text}</span>
+
+                  <div className="flex gap-2 opacity-80 group-hover:opacity-100 transition">
+                    <button
+                      onClick={() => editTask(task._id)}
+                      className="bg-yellow-500/90 hover:bg-yellow-500 text-black text-xs px-3 py-1.5 rounded-lg font-medium transition"
+                    >
+                      Edit
+                    </button>
+
+                    <button
+                      onClick={() => deleteTask(task._id)}
+                      className="bg-red-600/90 hover:bg-red-600 text-white text-xs px-3 py-1.5 rounded-lg font-medium transition"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </li>
+              ))
+            )}
+          </ul>
+        </div>
       </div>
     </section>
   );
