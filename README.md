@@ -1,4 +1,4 @@
-# 🚀 Secure Task Management System (Frontend-task for Internship)
+# 🚀 Secure Task Management System
 
 Full-stack **Task Manager Dashboard** with secure JWT authentication (httpOnly cookies), protected routes, user-specific tasks, and complete **CRUD** functionality.
 
